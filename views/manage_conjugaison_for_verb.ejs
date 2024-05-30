@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pricing example for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/pricing/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+      body {
+        font-family: 'Work Sans', sans-serif;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <header>
+      <%- include('navbar') %> 
+    </header>
+
+    <main style="" class="row">
+      <div class="col col-md-2" style="box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);position: fixed;height: 100%;">
+          <%- include('sidebar') %>       
+      </div>
+      <div class="col col-md-9" style="margin-left: 300px;">
+        
+
+      <div class="container-fluid" style="height: 150px;background-color: black;display: flex;align-items: center;justify-content: center;background: linear-gradient(90deg, #363aba,#7a5e9c,#845f86); ">
+        <div style="text-align: center;">
+          <h1 class="text-white">Gestion de la conjugaison pour le verbe <%= verb.verb %></h1>
+        </div>
+      </div>
+ 
+
+
+
+      <div class="container d-flex justify-content-center" style="position: relative;top: 50px;">
+        <div class="container">
+                  <% 
+                    for (const time of times) 
+                  { %>
+                    <div class="" style="margin-top: 10px;font-size: 25px;font-weight: bold;"><%= time.time_name %></div>
+                      <% 
+                      for (const person of persons) 
+                      {%>
+                        <div class="row">
+                          <div class="col-md-3">
+                          <%= person.person %>/   
+
+                          <% if(conjugaison_for_verb[verb.verb] && conjugaison_for_verb[verb.verb][time.time_name] && conjugaison_for_verb[verb.verb][time.time_name][person.person] ) {
+                          %>  
+
+                                <%=  conjugaison_for_verb[verb.verb][time.time_name][person.person] %>
+
+                          <% 
+                          }
+                          %>
+
+                          </div>
+                          <form id="form" method="POST" action="/api/post_conjugaison/web" class="col-md-9">
+                            <input type="text" name="id_time" value="<%= time.id_time %>" style="display:none ;">
+                            <input type="text" name="id_verb" value="<%= id_verb %>" style="display:none ;">
+                            <input type="text" name="id_person" value="<%= person.id_person %>" style="display:none ;">
+                            <input type="text" name="conjugated" value="">
+
+                            <input type="submit" name="" class="btn btn-dark" value="Mettre à jour">
+                          </form>
+                        </div>
+                      <% 
+                      } 
+                      %>
+
+                  <% 
+                  } %>
+          
+        </div>
+       </div>
+     </div>
+    </main>
+
+    <header>
+      <%- include('navbar') %> 
+    </header>
+
+
+
+   <script>
+    function submitForm() {
+      // Récupérer les données du formulaire
+      var form = document.getElementById("myform");
+      var formData = new FormData(form);
+
+      // Envoyer les données du formulaire via AJAX
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/post_conjugaison", true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Afficher un message de succès ou de réponse du serveur
+          alert(xhr.responseText);
+        }
+      };
+      xhr.send(formData);
+    }
+  </script>
+  </body>
+</html>

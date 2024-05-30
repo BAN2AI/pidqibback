@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pricing example for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/pricing/">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+      body {
+        font-family: 'Work Sans', sans-serif;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <header>
+      <%- include('navbar') %> 
+    </header>
+
+    <main style="" class="row">
+      <div class="col col-md-2" style="box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);position: fixed;height: 100%;">
+          <%- include('sidebar') %>       
+      </div>
+      <div class="col col-md-9" style="margin-left: 300px;">
+        
+
+      <div class="container-fluid" style="height: 150px;background-color: black;display: flex;align-items: center;justify-content: center;background: linear-gradient(90deg, #363aba,#7a5e9c,#845f86); ">
+        <div style="text-align: center;">
+          <h1 class="text-white">Gestion des joueurs pour Qi-Foot</h1>
+        </div>
+      </div>
+
+      <div class="container">
+      <form action="/api/post_player/web" method="post">
+
+        <div class="form-group">
+          <label for="exampleFormControlInput2">Nom du joueur</label>
+          <input type="text" name="player_name">
+        </div>
+        
+        <input type="submit" name="validate" class="btn btn-primary" value="Ajouter le joueur">
+
+
+      </form> 
+      </div>     
+
+
+
+      <div class="container d-flex justify-content-center" style="position: relative;top: 50px;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Verb</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% 
+                    let counter = 1; 
+                    for (const player of players) 
+                  { %>
+                    <tr>
+                      <td><%= counter %></td>
+                      <td><%= player.player_name %></td>
+                      <td>
+                        <a class="btn btn-danger" href="/api/delete_player/<%= player.id_player %>">Supprimer</a>
+                      </td>
+                      <td>
+                        <a class="btn btn-primary" href="/manage_players_question/<%= player.id_player %>">Gérer les questions</a>
+                      </td>
+                    </tr>
+                  <% 
+                    counter++
+                  } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+    </main>
+
+
+  </body>
+</html>
